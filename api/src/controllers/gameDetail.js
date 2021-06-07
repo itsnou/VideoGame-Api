@@ -1,11 +1,11 @@
-const getVideoGames = require('./getVideoGames');
+const getDb = require('./getAllGamesDB');
 const {VIDEOGAMES_URL} = require('../utils/constants');
 const {API_KEY} = process.env;
 const axios = require('axios');
 
 
 const getGameDetail = async(situation,element)=>{
-    let games = await getVideoGames();
+    let games = await getDb();
 
     switch(situation){
         case 'GAME':
@@ -40,10 +40,10 @@ const getGameDetail = async(situation,element)=>{
         case 'ID':
             //esto no me trae las description ya que el calleo de API por cantidad (40)
             //NO trae 40 por ende estas lineas quedan comentadas
-            // let onlyGame = games.filter(e=> parseInt(e.id) === parseInt(element)); 
-            // if(onlyGame.length>0){
-            //     return onlyGame
-            // }else{
+            let onlyGame = games.filter(e=> parseInt(e.id) === parseInt(element)); 
+            if(onlyGame.length){
+                return onlyGame
+            }else{
                 try{
                     onlyGame = await axios.get(`${VIDEOGAMES_URL}/${element}?key=${API_KEY}`);
                     let resultado=[];
@@ -54,14 +54,14 @@ const getGameDetail = async(situation,element)=>{
                         description: onlyGame.data.description,
                         image: onlyGame.data.background_image,
                         rating: onlyGame.data.rating,
-                        plataforms: onlyGame.data.parent_platforms,
+                        platforms: onlyGame.data.parent_platforms,
                         genres: onlyGame.data.genres,
                     })
                     return resultado;
                 }catch(error){
                     return resultado=error;
                 }
-            // }
+            }
         default:
             return games;
     }

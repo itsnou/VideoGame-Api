@@ -4,7 +4,7 @@ const router = Router();
 
 
 router.get('/',async (req,res)=>{
-    const {name} = req.query;
+    const {name,num} = req.query;
     let gamesTotal = await getVideoGames();
     if(name){
         let game = await gameDetail('GAME', name);
@@ -21,8 +21,25 @@ router.get('/',async (req,res)=>{
             return res.status(404).send({error: 'Game not found'})
         }
     }
-    return res.json(gamesTotal);
+    if(num){
+        if(num>0){
+            let start= num*15;
+            let end= start+15;
+            let paginate= gamesTotal.slice(start, end);
+            return res.status(200).json(paginate);
+        }
+    }
+    let paginate= gamesTotal.slice(0, 15);
+    console.log(paginate.length)
+    return res.status(200).json(paginate);
 });
+
+//ruta agregada para conocer el total de los juegos vigentes y de ahi calcular
+// para lograr la paginacion de manera optima y no un hardcodeo
+router.get('/total',async (req,res)=>{
+    let gamesTotal = await getVideoGames();
+    res.json(gamesTotal.length)
+})
 
 module.exports=router;
 

@@ -37,7 +37,7 @@ conn.sync({ force: true }).then(() => {
         rating: element.data.rating,
         platforms: element.data.parent_platforms,
 			})
-				.then((r) => r.setGenres(1))
+				.then((r) => r.setGenres([1,2]))
 				.then(console.log('JUEGO CREADO'))
 		);
 		axios.get(`${VIDEOGAMES_GENRES}?key=${API_KEY}`).then((element) => {

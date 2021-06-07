@@ -7,8 +7,9 @@ router.get('/:id', async (req,res)=>{
     const {id} = req.params;
     if(id){
         let game = await gameDetail('ID', id);
+        console.log(game.length)
         game.length
-            ? res.json(game)
+            ? res.json(game[0])
             : res.status(404).json({error: 'Game not found'})
     }
 });

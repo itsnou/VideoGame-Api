@@ -5,6 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://cdn.designbyhumans.com/file/module/store/672/46672/hero/4896966.jpg');
+  background-size:cover;
+    background-position: center center;
+    background-attachment: fixed;
+    opacity: 0.9;
 }
 
 code {
