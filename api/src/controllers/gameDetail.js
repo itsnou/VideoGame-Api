@@ -15,7 +15,7 @@ const getGameDetail = async(situation,element)=>{
                 return game
             }else{
                 //sino encontro el juego en la primera lista, se realiza una busqueda del nombre en base
-                // al parametro ingresado y este retornara 15 juegos que se asemejen o sea el que busca
+                //al parametro ingresado y este retornara 15 juegos que se asemejen o sea el que busca
                 let resultados=[];
                 game = await axios.get(`${VIDEOGAMES_URL}?key=${API_KEY}&search=${element}`);
                 if(game.data.results.length>0){
@@ -25,6 +25,7 @@ const getGameDetail = async(situation,element)=>{
                                 id: element.id,
                                 name: element.name,
                                 released: element.released,
+                                description: element.description,
                                 image: element.background_image,
                                 rating: element.rating,
                                 plataforms: element.parent_platforms,
@@ -35,25 +36,32 @@ const getGameDetail = async(situation,element)=>{
                     return resultados;
                 }
             }
+            return game
         case 'ID':
-            let onlyGame = games.filter(e=> parseInt(e.id) === parseInt(element)); 
-            if(onlyGame.length>0){
-                return onlyGame
-            }else{
-                onlyGame = await axios.get(`${VIDEOGAMES_URL}/${element}?key=${API_KEY}`);
-                let resultado=[];
-                resultado.push({
-                    id: onlyGame.data.id,
-                    name: onlyGame.data.name,
-                    released: onlyGame.data.released,
-                    image: onlyGame.data.background_image,
-                    rating: onlyGame.data.rating,
-                    plataforms: onlyGame.data.parent_platforms,
-                    genres: onlyGame.data.genres,
-                })
-                
-                return resultado;
-            }
+            //esto no me trae las description ya que el calleo de API por cantidad (40)
+            //NO trae 40 por ende estas lineas quedan comentadas
+            // let onlyGame = games.filter(e=> parseInt(e.id) === parseInt(element)); 
+            // if(onlyGame.length>0){
+            //     return onlyGame
+            // }else{
+                try{
+                    onlyGame = await axios.get(`${VIDEOGAMES_URL}/${element}?key=${API_KEY}`);
+                    let resultado=[];
+                    resultado.push({
+                        id: onlyGame.data.id,
+                        name: onlyGame.data.name,
+                        released: onlyGame.data.released,
+                        description: onlyGame.data.description,
+                        image: onlyGame.data.background_image,
+                        rating: onlyGame.data.rating,
+                        plataforms: onlyGame.data.parent_platforms,
+                        genres: onlyGame.data.genres,
+                    })
+                    return resultado;
+                }catch(error){
+                    return resultado=error;
+                }
+            // }
         default:
             return games;
     }

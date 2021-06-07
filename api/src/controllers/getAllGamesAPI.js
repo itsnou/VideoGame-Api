@@ -3,12 +3,15 @@ const {VIDEOGAMES_URL} = require('../utils/constants');
 const {API_KEY} = process.env;
 
 const getApi = async() =>{
+    // llamado a las apis para obtener 100 juegos
+
     let callApi1 = await axios.get(`${VIDEOGAMES_URL}?key=${API_KEY}&page_size=40`);
     let callApi2 = await axios.get(`${VIDEOGAMES_URL}?key=${API_KEY}&page=2&page_size=40`);
     let callApi3 = await axios.get(`${VIDEOGAMES_URL}?key=${API_KEY}&page=3&page_size=20`);
     let games=[];
 
 
+    //mapeo para que games contenga 40 juegos por default de la API
     callApi1.data.results.map(element=>{
         games.push({
             id: element.id,
@@ -16,7 +19,7 @@ const getApi = async() =>{
             released: element.released,
             image: element.background_image,
             rating: element.rating,
-            plataforms: element.parent_platforms,
+            platforms: element.parent_platforms,
             genres: element.genres,
         })
     })
@@ -28,7 +31,7 @@ const getApi = async() =>{
             released: element.released,
             image: element.background_image,
             rating: element.rating,
-            plataforms: element.parent_platforms,
+            platforms: element.parent_platforms,
             genres: element.genres,
         })
     })
@@ -40,11 +43,11 @@ const getApi = async() =>{
             released: element.released,
             image: element.background_image,
             rating: element.rating,
-            plataforms: element.parent_platforms,
+            platforms: element.parent_platforms,
             genres: element.genres,
         })
     })
-    
+    // deberian ser 100 juegos en games.length;
     return games;
 }
 

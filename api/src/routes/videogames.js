@@ -6,7 +6,6 @@ const router = Router();
 router.get('/',async (req,res)=>{
     const {name} = req.query;
     let gamesTotal = await getVideoGames();
-
     if(name){
         let game = await gameDetail('GAME', name);
         if(game.length>0){
@@ -22,12 +21,8 @@ router.get('/',async (req,res)=>{
             return res.status(404).send({error: 'Game not found'})
         }
     }
-    console.log(gamesTotal.length)
     return res.json(gamesTotal);
 });
-
-
-
 
 module.exports=router;
 

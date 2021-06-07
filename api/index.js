@@ -27,7 +27,6 @@ const {API_KEY} = process.env;
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
-    let plataformas=[];
     axios.get(`https://api.rawg.io/api/games/1?key=${API_KEY}`)
     .then((element) =>
 			Videogame.create({
@@ -37,7 +36,6 @@ conn.sync({ force: true }).then(() => {
         image: element.data.background_image,
         rating: element.data.rating,
         platforms: element.data.parent_platforms,
-        genres: element.data.genres,
 			})
 				.then((r) => r.setGenres(1))
 				.then(console.log('JUEGO CREADO'))
