@@ -27,22 +27,22 @@ const {API_KEY} = process.env;
 conn.sync({ force: true }).then(() => {
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
-    axios.get(`https://api.rawg.io/api/games/1?key=${API_KEY}`)
-    .then((element) =>
-			Videogame.create({
-        name: element.data.name,
-        released: element.data.released,
-        description: element.data.description,
-        image: element.data.background_image,
-        rating: element.data.rating,
-        platforms: element.data.parent_platforms,
-			})
-				.then((r) => r.setGenres([1,2]))
-				.then(console.log('JUEGO CREADO'))
-		);
-		axios.get(`${VIDEOGAMES_GENRES}?key=${API_KEY}`).then((element) => {
+    // axios.get(`https://api.rawg.io/api/games/1?key=${API_KEY}`)
+    // .then((element) =>
+		// 	Videogame.create({
+    //     name: element.data.name,
+    //     released: element.data.released,
+    //     description: element.data.description,
+    //     image: element.data.background_image,
+    //     rating: element.data.rating,
+    //     platforms: element.data.parent_platforms,
+		// 	})
+		// 		.then((r) => r.setGenres(1))
+		// 		.then(console.log('JUEGO CREADO'))
+		// );
+	  axios.get(`${VIDEOGAMES_GENRES}?key=${API_KEY}`).then((element) => {
       element.data.results.forEach((el) => Genre.create({id:el.id, name: el.name}));
       console.log('GENEROS AGREGADOS');
-    });
+    })
   });
 });

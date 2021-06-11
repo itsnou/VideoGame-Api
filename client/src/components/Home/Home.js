@@ -1,61 +1,59 @@
 import { StyledDiv } from "./styled";
-import {useState, useEffect} from 'react';
+import { useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {getGames, getTotalNum} from '../../actions/actions';
+import {getGames} from '../../actions/actions';
 import Card from './Card';
 
 const Home = () => {
     const dispatch = useDispatch();
-    const games = useSelector(state => state.games);
-    const totalGames = useSelector(state => state.gamesTotal);
-    const [page, setPage] = useState(0)
-    let pages=[];
-    
-    useEffect(() => {
-        dispatch(getTotalNum());
-    }, [1]);
-
-    const handleClick= (e)=>{
-        setPage(e.target.value)
-    }
+    const games = useSelector(state => state.gamesViews.now);
+    const gamesFilter = useSelector(state => state.gamesFilter);
 
     useEffect(() => {
-        dispatch(getGames(page));
-    }, [page]);
+        dispatch(getGames());
+    }, [dispatch]);
 
-    if(games.length>0){
-        let gamesAPI= 100;
-        let gamesDB= gamesAPI-totalGames;
-
-        let countPage= Math.ceil(totalGames/15);
-
-        for(let i=0; i< countPage; i++){
-            pages.push(i);
-        }
-    }
-
+    const handleClick = (e) => {
+		dispatch(getGames(e.target.value));
+	};
     
     return (  
         <StyledDiv>
-            <ul className='list-page'>
-            {
-                pages.map(el=>{
-                    return <li value={el} onClick={e=>handleClick(e)}>{el+1}</li>
-                })
-            }
-            </ul>
-            <div className='container--cards'>
-                {
-                    games && games.map((juego,i)=>{
-                        return <Card key={i}
-                        id={juego.id}
-                        name={juego.name}
-                        genres={juego.genres}
-                        image={juego.image}
-                        />
-                    })
-                }
-            </div>
+        {
+            gamesFilter === 'Search' ?
+                <>
+                    <div value={'All'} onClick={handleClick} className='back'>
+					{'< BACK'}
+				    </div>
+                    <div className='container--cards'>
+                        {
+                            games && games.map((juego,i)=>{
+                                return <Card key={i}
+                                id={juego.id}
+                                name={juego.name}
+                                genres={juego.genres}
+                                image={juego.image}
+                                />
+                            })
+                        }
+                    </div>
+                </>
+                :
+                 <>
+                    <div className='container--cards'>
+                        {
+                            games && games.map((juego,i)=>{
+                                return <Card key={i}
+                                id={juego.id}
+                                name={juego.name}
+                                genres={juego.genres}
+                                image={juego.image}
+                                />
+                            })
+                        }
+                    </div>
+                </>
+        }
         </StyledDiv>
     );
 }

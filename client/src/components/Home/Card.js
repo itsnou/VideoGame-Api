@@ -10,8 +10,8 @@ const Card = ({id,name,genres,image}) => {
                     <h2>{name}</h2>
                     <div className='genres'>
                         {
-                            genres.map(genre=>{
-                                return <p>{genre.name}</p>
+                            genres.map((genre,id)=>{
+                                return <p key={id}>{genre.name}</p>
                             })
                         }
                     </div>

@@ -14,12 +14,22 @@ module.exports = (sequelize) => {
 
     name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate:{
+        notNull:{
+          msg: 'Es necesario el nombre',
+        }
+      }
     },
     
     description:{
       type: DataTypes.TEXT,
-      allowNull:false
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'Es necesario cargar la descripcion',
+        }
+      }
     },
 
     released:{
@@ -36,8 +46,14 @@ module.exports = (sequelize) => {
 
     platforms:{
       type: DataTypes.JSON,
-      allowNull:false
+      allowNull:false,
+      validate:{
+        notNull:{
+          msg: 'Es necesario cargar la plataforma',
+        }
+      }
     }
   },
+  {timestamps: false}
   );
 };

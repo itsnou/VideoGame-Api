@@ -3,60 +3,76 @@ import styled from 'styled-components';
 
 export const StyledDiv = styled.div`
     display:flex;
-    padding-top:10px;
     justify-content:space-between;
+    border: 1px solid white;
+    border-radius: 5px;
+    background: black;
+    margin: 0 5px;
     opacity: 0.9;
+    margin-bottom: 30px;
     .container-logo{
         display:flex;
-        padding:2px;
+        margin: 3px 0;
         margin-left:30px;
         text-shadow: 2px 3px white;
         .logo{
             text-decoration:none;
             font-family: 'Press Start 2P', cursive;
             color:white;
-            padding:3px;
             border-radius: 3px;
-            border: 1px solid white;
-            padding:0 10px 0 10px;
             color:red;
             letter-spacing: .17em;
+            :hover{
+                background-color: white;
+                color:orange;
+                text-shadow: 2px 3px gray;
+                transition-duration: .6s;
+            }
         }
     }
 
     .botonera{
         display:flex;
+        margin: 3px 0;
         font-family: 'Press Start 2P', cursive;
         .btn-inicio{
             text-decoration:none;
             color:red;
             margin: 0 20px 0 40px;
             border-radius: 3px;
-            border: 1px solid red;
-            padding:0 10px 0 10px;
             h2{
                 letter-spacing: .17em;
                 text-shadow: 2px 3px white;
+                :hover{
+                    text-shadow: 2px 3px gray;
+                }
+            }
+            :hover{
+                background-color: white;
+                color:orange;
+                text-shadow: 2px 3px gray;
+                transition-duration: .6s;
             }
         }
         .btn-createGame{
             text-decoration:none;
-            color:white;
+            color:red;
             margin: 0 20px 0 40px;
             border-radius: 3px;
-            border: 1px solid red;
-            animation: mymove 5s infinite;
-            padding:0 10px 0 10px;
             h2{
                 letter-spacing: .17em;
                 text-shadow: 2px 3px white;
+                :hover{
+                    text-shadow: 2px 3px gray;
+                }
+            }
+            :hover{
+                background-color: white;
+                color:orange;
+                transition-duration: .6s;
             }
         }
         
     }
 
-    @keyframes mymove {
-        from {color: red;}
-        to {color: blue;}
-    }
 `

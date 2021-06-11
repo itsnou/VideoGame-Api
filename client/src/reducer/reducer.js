@@ -1,15 +1,19 @@
+import { getViews, getGenres, getGamesOrder, getOrderType } from '../utils/methods';
+
 const initialState = {
 	games: [],
+    paginate:'',
 	gameDetail: [],
     gamesGenres: [],
     gamesTotal:undefined,
-	gamesViews: {
-		all: [],
-		now: [],
-	},
-	gamesFilter: 'All',
-	gamesFrom: 'All',
-};
+	gameSearch:[],
+    gamesViews:{
+        all:[],
+        now:[]
+    },
+    gamesFilter:'All',
+    gamesList:'All'
+}
 
 const gamesReducer = (state=initialState, {type,payload}) => {
     switch(type){
@@ -17,6 +21,11 @@ const gamesReducer = (state=initialState, {type,payload}) => {
             return{
                 ...state,
                 games: payload,
+                gamesViews:{
+                    all: payload,
+                    now: getViews(payload)
+                },
+                gamesFilter:'All'
             };
         
         case 'GAME_DETAIL':
@@ -28,28 +37,71 @@ const gamesReducer = (state=initialState, {type,payload}) => {
         case 'GENRES_GAMES':
             return{
                 ...state,
-                genres:payload
+                gamesGenres:payload
             }
-        
-        case 'GET_TOTAL':
+
+        case 'GAME_SEARCH':
             return{
                 ...state,
-                gamesTotal: payload
+                gamesViews:{
+                    ...state.gamesViews,
+                    all: payload,
+                    now: payload
+                },
+                gamesFilter:'Search'
             }
         
-        // case 'SET_GENRE':
-        //     state.gamesViews.all = GetGamesType(
-        //         payload,
-        //         GetGameFrom(state.gamesFrom, state.games)
-        //     );
-        //     return{
-        //         ...state,
-        //         gamesViews:{
-        //             ...state,gamesViews,
-        //             now: GetGamesViews(state.gamesViews.all)
-        //         },
-        //         gameFilter:payload
-        //     }
+        case 'SET_GENRE':
+            state.gamesViews.all = getGenres(
+                payload, 
+                getOrderType(state.gamesList, state.games)
+            );
+            return {
+                ...state,
+                gamesViews:{
+                    ...state.gamesViews,
+                    now: getViews(state.gamesViews.all)
+                },
+                gamesFilter: payload
+            }
+
+        case 'GAMES_ORDER':
+            return {
+				...state,
+				gamesViews: {
+					...state.gamesViews,
+					now: getViews(
+						getGamesOrder(payload, state.gamesViews.all)
+					),
+				},
+				gamesFilter: payload,
+			};
+
+        case 'GAMES_TYPE':
+            return {
+				...state,
+				gamesViews: {
+					...state.gamesViews,
+					all: getOrderType(payload, state.games),
+					now: getViews(getOrderType(payload, state.games)),
+				},
+
+				gamesList: payload, /// API
+				gamesFilter: payload,
+			};
+
+        case 'GET_VIEWSXPAGE':
+        return {
+            ...state,
+            gamesViews: {
+                ...state.gamesViews,
+                now: getViews(
+                    state.gamesViews.all,
+                    payload.min,
+                    payload.max
+                ),
+            },
+        };
 
         default:
             return state;

@@ -1,14 +1,17 @@
 import {StyledDiv} from './styled';
 import {Link} from 'react-router-dom';
+import Search from '../Search/Search'
 
 const Nav = () => {
+
     return ( 
         <StyledDiv>
             <div className='container-logo'>
-                <Link to='/home' className='logo'>
+                <Link to='/' className='logo'>
                     <h2>Game Over</h2>
                 </Link>
             </div>
+            <Search/>
             <div className='botonera'>
                 <Link to='/home' className='btn-inicio'>
                     <h2>Inicio</h2>

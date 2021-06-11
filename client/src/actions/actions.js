@@ -2,9 +2,9 @@ import axios from 'axios';
 import {GAMES_URL, GAMES_TOTAL, GAMES_NAME, GAMES_GENRES, GAMES_ID} from '../utils/constants';
 
 //cargar juegos
-export const getGames = (num) => async (dispatch)=>{
+export const getGames = () => async (dispatch)=>{
     try{
-        const games = await axios.get(`${GAMES_URL}?num=${num}`);
+        const games = await axios.get(GAMES_URL);
         dispatch({type: 'GET_GAMES', payload: games.data})
     }catch(err){
         console.log(err);
@@ -46,7 +46,7 @@ export const getDetail = (id) => async (dispatch) =>{
 //cargar juego o juegos
 export const getSearch = (name) => async (dispatch) =>{
     try{
-        const search = await axios.get(GAMES_NAME + name);
+        const search = await axios.get(`${GAMES_NAME}name=${name}`);
         dispatch({type: 'GAME_SEARCH', payload: search.data})
     }catch(err){
         console.log(err);
@@ -54,30 +54,28 @@ export const getSearch = (name) => async (dispatch) =>{
     };
 };
 
-//paginacion pretendida
-export const pagination = (page) => (dispatch) =>{
-    dispatch({
-        type: 'PAGINATION_VIEWS',
-        payload: {
-            page:page.page,
-            max: page.max,
-            min: page.min
-        }
-    });
+export const setGamesViews = (page) => (dispatch) => {
+	dispatch({
+		type: 'GET_VIEWSXPAGE',
+		payload: {
+			page: page.page,
+			max: page.max,
+			min: page.min
+		}
+	});
 };
 
+//Ordena por Genero
 export const setGamesGenres= (genre) => (dispatch) =>{
     dispatch({type: 'SET_GENRE', payload: genre})
 };
 
+//Ordena por abecedario, rating mayor y menor
 export const setGamesOrder = (order) => (dispatch)=>{
     dispatch({type: 'GAMES_ORDER', payload: order})
 };
 
+//Ordena por API o DB
 export const setGamesTypes = (type) => (dispatch) =>{
     dispatch({type: 'GAMES_TYPE' , payload: type})
-};
-
-export const clearDetail = () => (dispatch) =>{
-    dispatch({type: 'CLEAR_DETAIL'});
 };

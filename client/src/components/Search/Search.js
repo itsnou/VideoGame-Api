@@ -1,9 +1,10 @@
 import {StyleDiv}  from './styled';
 import {useState} from 'react';
-import {connect} from 'react-redux';
 import {getSearch} from '../../actions/actions';
+import {useDispatch} from 'react-redux';
 
 const Search = () => {
+    const dispatch = useDispatch();
     const [name, setName] = useState('');
 
 
@@ -12,31 +13,26 @@ const Search = () => {
     }
 
     const handleSubmit = (e)=>{
+        e.preventDefault();
         if(name.length){
-            getSearch(name);
+            dispatch(getSearch(name));
         }
     }
 
     return (
         <StyleDiv>
             <div className='container'>
-				<div className='search-title'>
-					<h2 className='title'>Buscar un Juego</h2>
-				</div>
-                <div className='form'>
+                <form className='form' onSubmit={e => handleSubmit(e)}>
 					<input
 						className='input'
 						type='text'
 						autoComplete='off'
                         onChange={(e) => handleChange(e)}
 					/>
-                    <button className='btn-search' onClick={(e)=>handleSubmit(e)}>
-                        Search
-                    </button>
-                </div>
+                </form>
 			</div>
         </StyleDiv>
     );
 }
- 
-export default connect(null, {getSearch})(Search)
+
+export default Search;

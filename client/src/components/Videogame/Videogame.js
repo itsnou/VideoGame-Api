@@ -1,4 +1,3 @@
-import Nav from '../Nav/Nav';
 import {useRef,useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {getDetail} from '../../actions/actions';
@@ -14,20 +13,21 @@ const VideoGame = ({match}) => {
         dispatch(getDetail(fixedMatch.current));
     },[dispatch])
 
+    console.log(game);
+
     return (  
         <>
-            <Nav/>
             <StyledDiv>
-             {
-                <Card key={game.id}
-                    name={game.name}
-                    description={game.description}
-                    rating={game.rating}
-                    platforms={game.platforms}
-                    genres={game.genres}
-                    image={game.image}
-                />
-            } 
+                {
+                    <Card key={game.id}
+                        name={game.name}
+                        description={game.description}
+                        rating={game.rating}
+                        platforms={game.platforms}
+                        genres={game.genres}
+                        image={game.image}
+                    />
+                }
             </StyledDiv>
         </>
     );
