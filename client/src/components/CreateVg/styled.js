@@ -21,6 +21,16 @@ export const StyledDiv = styled.div`
             font-size: 30px;
             z-index:99999999;
         }
+        .errors{
+            margin:auto;
+            font-size:12px;
+            font-family:'Press Start 2P';
+        }
+        .create--confirm{
+            margin:auto;
+            font-size:12px;
+            font-family:'Press Start 2P';
+        }
         .container--image{
             display:block;
             width:98%;
@@ -99,6 +109,21 @@ export const StyledDiv = styled.div`
             }
             .generos-add{
                 font-size:14px;
+            }
+            .btn-container{
+                margin: 50px auto 0px auto;
+                .btn-submit{
+                    border-radius:3px;
+                    outline:none;
+                    border:none;
+                    background-color:white;
+                    box-shadow:2px 2px black;
+                    padding:10px 15px;
+                    :hover{
+                        background-color:red;
+                        box-shadow:none;
+                    }
+                }
             }
         }
     }
