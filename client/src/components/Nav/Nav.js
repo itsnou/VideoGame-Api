@@ -11,14 +11,18 @@ const Nav = () => {
                     <h2>Game Over</h2>
                 </Link>
             </div>
-            <Search/>
-            <div className='botonera'>
-                <Link to='/home' className='btn-inicio'>
-                    <h2>Inicio</h2>
-                </Link>
-                <Link to='/create' className='btn-createGame'>
-                    <h2>Crear Juego!</h2>
-                </Link>
+            <div className='container-btn'>
+                <div className='botonera'>
+                    <Link to='/home' className='btn-inicio'>
+                        <h2>Inicio</h2>
+                    </Link>
+                    <Link to='/create' className='btn-createGame'>
+                        <h2>Crear Juego!</h2>
+                    </Link>
+                </div>
+                <div className='searchBar'>
+                    <Search/>
+                </div>
             </div>
         </StyledDiv>
     );

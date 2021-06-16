@@ -4,8 +4,8 @@ const router = Router();
 
 
 router.get('/',async(req,res)=>{
-    const {name,num} = req.query;
-    let gamesTotal = await getVideoGames();
+    const {name} = req.query;
+    let gamesTotal = await getVideoGames(); // juegos de API Y LA DB
     if(name){
         let game = await gameDetail('GAME', name);
         if(game.length>0){

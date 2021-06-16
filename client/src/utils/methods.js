@@ -95,16 +95,19 @@ export const getGamesOrder = (order, array) =>{
 
 export const Validate = (inputs) => {
 	let errors = {};
-	let reg = /^\d+$/;
-	if (!inputs.name) {
+	if (inputs.name === '') {
 		errors.name = 'Nombre es requerido';
 	}
+
+	if (inputs.description === '') {
+		errors.description = 'Descripcion es requerida';
+	}
 	
-	if (!inputs.genres) {
+	if (inputs.genres[0] === undefined) {
 		errors.genres = 'Generos son requeridos';
 	}
-	if (!inputs.platforms) {
-		errors.platforms = 'Elije al menos una plataforma';
-	}
+	// if (inputs.platforms.length === 0) {
+	// 	errors.platforms = 'Elije al menos una plataforma';
+	// }
 	return errors;
 };

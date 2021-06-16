@@ -27,6 +27,7 @@ const Search = () => {
 						className='input'
 						type='text'
 						autoComplete='off'
+                        placeholder='Buscar'
                         onChange={(e) => handleChange(e)}
 					/>
                 </form>

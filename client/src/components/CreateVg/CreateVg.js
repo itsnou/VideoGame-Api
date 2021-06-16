@@ -3,10 +3,17 @@ import StyledDiv from './styled';
 import {useSelector, useDispatch} from 'react-redux';
 import {getGenres} from '../../actions/actions';
 import {IMAGEN,imgDefault, GAMES_ID} from '../../utils/constants';
+import {Validate} from '../../utils/methods';
 import axios from 'axios'
 
 
 const CreateVg = () => {
+    const dispatch = useDispatch();
+    const gamesGenres = useSelector(state=> state.gamesGenres);
+    const [errors, setErrors] = useState({});
+    const [alert, setAlert] = useState({error: false, create:false});
+    const [typeGenre, setTypeGenre] = useState([]);
+    const [typePlatform, setTypePlatform] = useState([]);
     const [inputs, setInputs] = useState({
         name:'',
         description:'',
@@ -54,12 +61,7 @@ const CreateVg = () => {
             }
         }
     ];
-    const dispatch = useDispatch();
-    const gamesGenres = useSelector(state=> state.gamesGenres);
-    const [errors, setErrors] = useState({});
-    const [alert, setAlert] = useState({errors: false, create:false});
-    const [typeGenre, setTypeGenre] = useState([]);
-    
+
     useEffect(()=>{
         dispatch(getGenres());
     },[dispatch]);
@@ -76,12 +78,21 @@ const CreateVg = () => {
         }
     },[typeGenre]);
 
+    useEffect(()=>{
+        setErrors(Validate(inputs))
+    },[inputs])
     
+    console.log(errors);
+    useEffect(() => {
+		if (!Object.keys(errors).length) {
+			setAlert({...alert, errors: false});
+		}
+	}, [errors]);
+
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        let {name,description, platforms} = inputs
-        if(!name || !description || !platforms){
-            setErrors({error: !name? 'Falta el nombre' : !description? 'Falta la descripcion' : !platforms[0]?'Falta elegir 1 plataforma' : null})
+        if(Object.keys(errors).length){
+            setAlert({...alert, error:true});
         }
         else{
             try{
@@ -98,7 +109,6 @@ const CreateVg = () => {
     };
     
     const handlePlatform=(e)=>{
-        console.log(inputs);
         setInputs({...inputs, platforms: [...inputs.platforms,{platform: {name: e.target.value}}]});
     };
 
@@ -114,129 +124,129 @@ const CreateVg = () => {
         } else setTypeGenre([e.target.value])
     };
 
+    const handleShowPlatform=(e)=>{
+        if(inputs.platforms.length<4){
+            if(!typePlatform.includes(e.target.value)){
+                setTypePlatform([...typePlatform, e.target.value]);
+            }
+        } else setTypePlatform([e.target.value])
+    };
 
 
     return (
         <StyledDiv>
-            <form onSubmit={(e) => handleSubmit(e)}>
                 <div>
                     <h1>Crea tu VideoJuego</h1>
                 </div>
-                {/* errores */}
-                {
-                    alert.errors ? (
-                        <div className='errors'>
-                            <ul>
-                                {
-                                    Object.keys(errors).map(el=>(
-                                        <li key={el} className='errors--text'>
-                                            {el}
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>
-                    ) : null
-                }
-                <div className='container--image'>
-                    <img src={inputs.image} alt='imagenloca'/>
+            <form onSubmit={(e) => handleSubmit(e)} className='container'>
+                <div>
+                    {
+                        alert.error ? (
+                            <div className='errors'>
+                                <ul>
+                                    {
+                                        Object.values(errors).map(el=>(
+                                            <li key={el} className='errors--text'>
+                                                {el}
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>
+                        ) : null
+                    }
+                    <div className='container--image'>
+                        <img src={inputs.image} alt='imagenloca'/>
+                        <select onChange={e=>handleImage(e)}>
+                            {IMAGEN &&
+                                IMAGEN.map((el,i)=>(
+                                    <option key={i} value={el.imagen}>
+                                        Imagen {i+1}
+                                    </option>
+                                ))
+                            }
+                        </select>
+                    </div>
                 </div>
-                <div className='imagen--select'>
-                    <select onChange={e=>handleImage(e)}>
-                        {IMAGEN &&
-                            IMAGEN.map((el,i)=>(
-                                <option key={i} value={el.imagen}>
-                                    Imagen {i+1}
-                                </option>
+                <div className='formulario'>
+                    <div className='nombre'>
+                        <label className='form--label_title'>Nombre</label>
+                        <input
+                            className='input'
+                            name='name'
+                            autoComplete='off'
+                            onChange={e => handleChange(e)}
+                        />
+                    </div>
+                    <div className='descripcion'>
+                        <label className='form--label_description'>Descripcion</label>
+                        <textarea
+                            className='input'
+                            name='description'
+                            autoComplete='off'
+                            onChange={e => handleChange(e)}
+                        />
+                    </div>
+                    <div className='rating'>
+                        <label className='form--label_description'>Rating</label>
+                        <input
+                            type='number'
+                            className='input'
+                            name='rating'
+                            autoComplete='off'
+                            onChange={e => handleChange(e)}
+                        />
+                    </div>
+                    <div className='date'>
+                        <label className='form--label_date'>Fecha de lanzamiento</label>
+                        <input
+                            type='date'
+                            className='input'
+                            name='released'
+                            autoComplete='off'
+                            onChange={e => handleChange(e)}
+                        />
+                    </div>
+                    <div className='plataformas'>
+                        <label className='form--label_title'>Plataforma</label>
+                        <select onChange={e => handlePlatform(e), e=> handleShowPlatform(e)}>
+                            {plataformas &&
+                                plataformas.map((p,i)=>(
+                                    <option key={i} value={p.platform.name}>{p.platform.name}</option>
+                                ))
+                            }
+
+                        </select>
+                        {typePlatform &&
+                            typePlatform.map((p,i)=>(
+                                <div key={i} className='generos-add'>
+                                    <label className='generos-add'>{p}</label>
+                                </div>
                             ))
                         }
-                    </select>
-                </div>
-                <div className='formulario'>
-                    <div className='form--label'>
-                        <label key={1} className='form--label_title'>Nombre</label>
                     </div>
-                    <input
-                        className='input'
-                        key={1}
-                        name='name'
-                        autoComplete='off'
-                        onChange={e => handleChange(e)}
-                    />
-                </div>
-                <div className='formulario'>
-                    <div className='form--label'>
-                        <label key={2} className='form--label_title'>Descripcion</label>
-                    </div>
-                    <textarea
-                        className='input'
-                        key={2}
-                        name='description'
-                        autoComplete='off'
-                        onChange={e => handleChange(e)}
-                    />
-                </div>
-                <div className='formulario'>
-                    <div className='form--label'>
-                        <label key={3} className='form--label_title'>Rating</label>
-                    </div>
-                    <input
-                        className='input'
-                        key={3}
-                        name='rating'
-                        autoComplete='off'
-                        onChange={e => handleChange(e)}
-                    />
-                </div>
-                <div className='formulario'>
-                    <div className='form--label'>
-                        <label key={4} className='form--label_title'>Fecha de lanzamiento</label>
-                    </div>
-                    <input
-                        type='date'
-                        className='input'
-                        key={4}
-                        name='released'
-                        autoComplete='off'
-                        onChange={e => handleChange(e)}
-                    />
-                </div>
-                {/* PLATAFORMAS */}
-                <div className='formulario--selectors'>
-                    <div className='form--label'>
-                        <label key={5} className='form--label_title'>Plataforma</label>
-                    </div>
-                    <select onChange={e => handlePlatform(e)}>
-                        {plataformas &&
-                            plataformas.map((p,i)=>(
-                                <option key={i} value={p.platform.name}>{p.platform.name}</option>
-                            ))
-                        }
-                    </select>
-                </div>
-                {/* GENEROS */}
-                <div className='formulario--selectors'>
-                    <div className='form--label'>
-                        <label key={6} className='form--label_title'>Genero</label>
-                    </div>
-                    <select onChange={e => handleGenres(e)}>
-                        {gamesGenres &&
-                            gamesGenres.map((g,i)=>(
-                                <option key={i} value={g.name}>{g.name}</option>
-                            ))
-                        }
-                    </select>
-                    <div className='div_type_container'>
+                    <div className='genero'>
+                        <label className='form--label_title'>Genero</label>
+                        <select onChange={e => handleGenres(e)}>
+                            {gamesGenres &&
+                                gamesGenres.map((g,i)=>(
+                                    <option key={i} value={g.name}>{g.name}</option>
+                                ))
+                            }
+                        </select>
                         {typeGenre &&
                             typeGenre.map((el, i) => (
-                                <div key={i} className='div_type'>
-                                    <label className='label'>{el}</label>
+                                <div key={i} className='generos-add'>
+                                    <label className='generos-add'>{el}</label>
                                 </div>
-                            ))}
+                            ))
+                        }
                     </div>
-                </div>
-                <div className='btn-container'>
-                    <button className='btn-submit' type='submit'> Crear Juego </button>
+                    <div className='div_type_container'>
+                    </div>
+                    <div className='btn-container'>
+                        <button className='btn-submit' type='submit'> Crear Juego </button>
+                    </div>
                 </div>
                 {
                     alert.create ? (

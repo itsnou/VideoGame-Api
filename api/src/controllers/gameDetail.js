@@ -40,7 +40,7 @@ const getGameDetail = async(situation,element)=>{
         case 'ID':
             //esto no me trae las description ya que el calleo de API por cantidad (40)
             //NO trae 40 por ende estas lineas quedan comentadas
-            let onlyGame = games.filter(e=> parseInt(e.id) === parseInt(element)); 
+            let onlyGame = games.filter(e=> e.id === element); 
             if(onlyGame.length){
                 return onlyGame
             }else{

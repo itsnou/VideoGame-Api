@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 
 export const StyledDiv = styled.div`
+    margin-bottom: 15px;
     .back{
         color:white;
         cursor:pointer;
@@ -19,12 +20,16 @@ export const StyledDiv = styled.div`
     .container--cards{
         display:grid;
         width: 75%;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         grid-gap: 10px;
-        margin: 15px auto;
+        margin: auto;
+        justify-content:center;
+        text-align:center;
         color:white;
         -webkit-animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
         animation: scale-up-center 0.4s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+        background:black;
+        padding-bottom: 15px;
         .link{
             text-decoration:none;
             color:inherit;
@@ -32,6 +37,7 @@ export const StyledDiv = styled.div`
             height:275px;
             margin-bottom: 10px;
             .cards{
+                border: 1px solid white;
                 display:block;
                 margin-top:10px;
                 margin-left: 10px;
@@ -42,7 +48,7 @@ export const StyledDiv = styled.div`
                 text-align:center;
                 font-family: 'Press Start 2P', cursive;
                 :hover{
-                    transform: scale(1.13,1.1);
+                    transform: scale(1.03,1.05);
                     transition-duration: 1s;
                     background-color:black;
                 }

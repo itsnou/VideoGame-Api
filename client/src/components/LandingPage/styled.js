@@ -22,8 +22,9 @@ export const StyledDiv = styled.div`
             font-size:30px;
             h1{
                 font-family:'Press Start 2P', cursive;
-                color:#ff7d24;
+                color:red;
                 overflow: hidden; 
+                opacity:.7px;
                 border-right: .15em solid; 
                 white-space: nowrap; 
                 margin: 0;
@@ -31,7 +32,7 @@ export const StyledDiv = styled.div`
                 animation: 
                 typing 3.5s steps(30, end),
                 blink-caret .75s step-end infinite;
-                text-shadow: 4px 4px #ffffff;
+                text-shadow: 4px 4px black;
             }
         }
     }

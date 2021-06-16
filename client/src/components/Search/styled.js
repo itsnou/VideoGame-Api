@@ -18,9 +18,9 @@ export const StyleDiv = styled.div`
         .form{
             display:flex;
             text-decoration:none;
-            height:40px;
             margin-top:5px;
             .input {
+                height:43px;
                 margin-right: 20px;
                 border: 5px;
                 border-radius: 3px;
@@ -29,7 +29,5 @@ export const StyleDiv = styled.div`
             }
         }
     }
-}
 
-	
 `

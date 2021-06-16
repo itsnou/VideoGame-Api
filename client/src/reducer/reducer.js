@@ -85,7 +85,6 @@ const gamesReducer = (state=initialState, {type,payload}) => {
 					all: getOrderType(payload, state.games),
 					now: getViews(getOrderType(payload, state.games)),
 				},
-
 				gamesList: payload, /// API
 				gamesFilter: payload,
 			};

@@ -12,14 +12,17 @@ const Paginate = () => {
     const [paginated, setPaginated] = useState(0);
     let listArray = Array.from({length: paginated}, (e,i) => i+1);
 
+    //cambian las paginas me dispatchea nuevamente el nuevo array de 15 juegos.
     useEffect(()=>{
         dispatch(setGamesViews(paged))
     },[dispatch,paged])
 
+    //el total que va a mostrar, si son 15 juegos en total muestra 1 sola paginacion
     useEffect(() =>{
         setPaginated(Math.ceil(gamesViews.all.length / PAGINATES));
     },[gamesViews]);
 
+    //pagina que muestra y selecciona, pagina máxima, pagina minima.
     const handleClick = (e) =>{
         setPaged({
                 page: e.target.value,

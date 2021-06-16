@@ -1,7 +1,6 @@
 import {Route} from 'react-router-dom';
 import Nav from './components/Nav/Nav';
 import Home from './components/Home/Home';
-import Search from './components/Search/Search';
 import VideoGame from './components/Videogame/Videogame';
 import LandingPage from './components/LandingPage/LandingPage';
 import Filter from './components/Filter/Filter';
