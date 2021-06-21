@@ -17,6 +17,7 @@ export const StyledDiv = styled.div`
 			font-size: 18px;
 			list-style: none;
 			text-align: center;
+			margin: 15px 15px;
 			&:hover {
 				color: red;
 				cursor:pointer;

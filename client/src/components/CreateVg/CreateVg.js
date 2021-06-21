@@ -110,6 +110,7 @@ const CreateVg = () => {
     
     const handlePlatform=(e)=>{
         setInputs({...inputs, platforms: [...inputs.platforms,{platform: {name: e.target.value}}]});
+        handleShowPlatform(e);
     };
 
     const handleChange= (e)=>{
