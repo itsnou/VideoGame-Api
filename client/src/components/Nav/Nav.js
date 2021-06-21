@@ -1,8 +1,15 @@
 import {StyledDiv} from './styled';
 import {Link} from 'react-router-dom';
 import Search from '../Search/Search'
+import {getGames}  from '../../actions/actions';
+import {useDispatch} from 'react-redux';
 
 const Nav = () => {
+    const dispatch = useDispatch();
+    const handleSubmit = () =>{
+        dispatch(getGames());
+    }
+    
 
     return ( 
         <StyledDiv>
@@ -14,7 +21,7 @@ const Nav = () => {
             <div className='container-btn'>
                 <div className='botonera'>
                     <Link to='/home' className='btn-inicio'>
-                        <h2>Inicio</h2>
+                        <h2 onClick={() => handleSubmit()}>Inicio</h2>
                     </Link>
                     <Link to='/create' className='btn-createGame'>
                         <h2>Crear Juego!</h2>
@@ -29,4 +36,3 @@ const Nav = () => {
 }
 
 export default Nav;
-
