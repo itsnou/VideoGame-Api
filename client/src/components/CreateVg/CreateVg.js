@@ -209,13 +209,12 @@ const CreateVg = () => {
                     </div>
                     <div className='plataformas'>
                         <label className='form--label_title'>Plataforma</label>
-                        <select onChange={e => handlePlatform(e), e=> handleShowPlatform(e)}>
+                        <select onChange={e => handlePlatform(e)}>
                             {plataformas &&
                                 plataformas.map((p,i)=>(
                                     <option key={i} value={p.platform.name}>{p.platform.name}</option>
                                 ))
                             }
-
                         </select>
                         {typePlatform &&
                             typePlatform.map((p,i)=>(

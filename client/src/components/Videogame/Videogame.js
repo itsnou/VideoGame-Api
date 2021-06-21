@@ -14,8 +14,6 @@ const VideoGame = ({match}) => {
         dispatch(getDetail(fixedMatch.current));
     },[dispatch])
 
-    console.log(game);
-
     return (  
         <>
             <StyledDiv>

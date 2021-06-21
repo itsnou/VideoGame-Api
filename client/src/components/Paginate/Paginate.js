@@ -25,36 +25,45 @@ const Paginate = () => {
     //pagina que muestra y selecciona, pagina máxima, pagina minima.
     const handleClick = (e) =>{
         setPaged({
-                page: e.target.value,
-                max: PAGINATES * e.target.value,
-                min: PAGINATES * e.target.value - PAGINATES
+            page: e.target.value,
+            max: PAGINATES * e.target.value,
+            min: PAGINATES * e.target.value - PAGINATES
         })
     };
+
+    // useEffect(()=>{
+    //     setPaged({
+    //         page:1,
+    //         max: 15,
+    //         min:0
+    //     })
+    // },[gamesViews])
+
+    console.log(paged);
 
     return (  
         <StyledDiv>
         {
-            <div className='container'>
-                {
-                    listArray.map((el,i)=>{
-                        return <div key={i} className='list--container'>
-                            <ul>
-                                <List li={
-                                    <li 
-                                        key={i} 
-                                        className={el === paged.page ? 'listed' : 'list'}
-                                        value={el}
-                                        onClick={(e)=>handleClick(e)}
-                                    >
-                                        {el}
-                                    </li>
-                                }/>
-                                
-                            </ul>
-                        </div>
-                    })
-                }
-            </div>
+            listArray.length ?(
+                <div className='container'>
+                    {listArray && 
+                        listArray.map((el,i)=>{
+                            return <div key={i} className='list--container'>
+                                    <List li={
+                                        <li
+                                            key={i}
+                                            className='list'
+                                            value={el}
+                                            onClick={(e)=>handleClick(e)}
+                                        >
+                                            {el}
+                                        </li>
+                                    }/>
+                            </div>
+                        })
+                    }
+                </div>
+            ):null
         }
         </StyledDiv>
     );

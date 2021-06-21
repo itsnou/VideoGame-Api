@@ -8,30 +8,14 @@ export const getViews = (array, min, max) => {
 
 export const getGenres = (type, array) => {
 	if (type === 'All') return array;
-	let newArray = array.filter((el, i) =>
-		el.genres.length
-			? el.genres[0].name === type
-				? true
-				: el.genres.length > 1 ?
-					el.genres[1].name === type ?
-					true
-					: el.genres.length > 2 ?
-					el.genres[2].name === type ?
-					true
-					: el.genres.length > 3 ?
-					el.genres[3].name === type ?
-					true
-					: el.genres.length > 4 ? 
-					el.genres[4].name === type ?
-					true
-					: false
-				: false
-				: false
-				: false
-				: false
-			: false
-	);
-	return newArray;
+	let matchGenre= array.filter(el => {
+		for(let i = 0 ; i < el.genres.length ; i++){
+			if(el.genres[i].name === type){
+				return true;
+			}
+		}
+	});
+	return matchGenre;
 };
 
 export const getOrderType = (order, array) => {

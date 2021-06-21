@@ -1,5 +1,6 @@
 
 const Card = ({name,description,image,genres,rating,platforms}) => {
+    console.log(platforms);
 
     return (
         <div className='card'>

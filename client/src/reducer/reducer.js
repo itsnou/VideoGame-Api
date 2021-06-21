@@ -2,10 +2,8 @@ import { getViews, getGenres, getGamesOrder, getOrderType } from '../utils/metho
 
 const initialState = {
 	games: [],
-    paginate:'',
 	gameDetail: [],
     gamesGenres: [],
-    gamesTotal:undefined,
 	gameSearch:[],
     gamesViews:{
         all:[],
@@ -101,6 +99,8 @@ const gamesReducer = (state=initialState, {type,payload}) => {
                 ),
             },
         };
+
+        
 
         default:
             return state;
